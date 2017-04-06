@@ -23,7 +23,7 @@ vimdiff.premerge = keep
 ignore = ~/.hgignore
 merge = vimdiff
 portablefilenames = ignore
-username = Steven Stallion <sstallion@gmail.com>
+username = Ben Ridder <brridder@gmail.com>
 
 # Include local configuration:
 %include ~/.hgrc.local

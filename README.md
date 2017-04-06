@@ -8,7 +8,7 @@ user's home directory for each file tracked. Existing symbolic links will be
 overwritten; however, if a normal file or directory exists a warning will be
 issued and no action will be taken.
 
-    % git clone git://github.com/sstallion/dotfiles.git && cd dotfiles
+    % git clone git://github.com/brridder/dotfiles.git && cd dotfiles
     % sh install.sh
 
 <p align="center">
