@@ -73,3 +73,6 @@
 [submodule "files/vim/bundle/webapi-vim"]
 	path = files/vim/bundle/webapi-vim
 	url = git://github.com/mattn/webapi-vim.git
+[submodule "files/vim/bundle/neocomplete.vim"]
+	path = files/vim/bundle/neocomplete.vim
+	url = git@github.com:Shougo/neocomplete.vim.git
