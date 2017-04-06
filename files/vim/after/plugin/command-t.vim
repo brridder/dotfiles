@@ -10,7 +10,7 @@ let g:CommandTGitIncludeUntracked = 1
 let g:CommandTTraverseSCM = 'dir'
 
 " Occupy as much (or little) space as possible:
-let g:CommandTMaxHeight = 0
+let g:CommandTMaxHeight = 30
 let g:CommandTMinHeight = 0
 
 " Highlight Groups
