@@ -2,7 +2,7 @@
 
 " Default to `git ls-files`, including untracked files;
 " see: https://github.com/wincent/command-t/pull/235.
-let g:CommandTFileScanner         = 'git'
+let g:CommandTFileScanner         = 'find'
 let g:CommandTGitScanSubmodules   = 1
 let g:CommandTGitIncludeUntracked = 1
 
@@ -16,6 +16,12 @@ let g:CommandTMinHeight = 0
 " Highlight Groups
 let g:CommandTCursorColor    = 'Cursor'
 let g:CommandTHighlightColor = 'Wildmenu'
+
+" Cache settings
+let g:CommandTMaxCachedDirectories = 10
+
+" Ignore settings
+let g:CommandTWildIgnore=&wildignore . ",*build"
 
 " Key Mappings
 let g:CommandTCancelMap = ['<C-C>', '<Esc>']

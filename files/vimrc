@@ -38,7 +38,7 @@ set timeoutlen=2000
 set ttimeoutlen=0
 set ttyfast
 
-set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
+set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc,*/build/,build/**
 set wildmenu                                                 " show a navigable menu for tab completion
 set wildmode=longest:list
 
@@ -96,6 +96,7 @@ endif
 " Default Indentation
 set autoindent
 set shiftround
+set expandtab
 set shiftwidth=4
 set softtabstop=4
 set tabstop=8
@@ -114,8 +115,8 @@ noremap <C-l> <C-w>l
 
 nnoremap <leader>] :TagbarToggle<CR>
 
-noremap <C-J> <PageDown>
-noremap <C-K> <PageUp>
+" noremap <C-J> <PageDown>
+" noremap <C-K> <PageUp>
 
 noremap <silent> <Leader>n :set hlsearch!<CR>
 noremap <silent> <Leader>p :set paste!<CR>
@@ -174,7 +175,7 @@ colorscheme wtf
 
 " Stolen from https://github.com/Shougo/neocomplete.vim
 " Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_at_startup = 0
 " Use smartcase.
 let g:neocomplete#enable_smart_case = 1
 " Set minimum syntax keyword length.
@@ -213,6 +214,12 @@ inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 " Close popup by <Space>.
 "inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+"inoremap <expr><Esc> (pumvisible() ? "\<C-y>" "\<Esc>" : "\<Esc>") <Esc>
+
+"inoremap <silent> <Esc> <C-r>=<SID>my_esc_function()<Esc>
+"function! s:my_esc_function()
+  "return (pumvisible() ? "\<C-e> \<Esc>" : "" ) . "\<Esc>"
+"endfunction
 
 " Source local configuration:
 silent! source ~/.vimrc.local
