@@ -76,3 +76,6 @@
 [submodule "files/vim/bundle/neocomplete.vim"]
 	path = files/vim/bundle/neocomplete.vim
 	url = git@github.com:Shougo/neocomplete.vim.git
+[submodule "files/vim/bundle/YouCompleteMe"]
+	path = files/vim/bundle/YouCompleteMe
+	url = git@github.com:Valloric/YouCompleteMe.git

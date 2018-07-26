@@ -66,7 +66,9 @@ if has('extra_search')
 endif
 
 if has('folding')
-  set nofoldenable
+  set foldenable
+  set foldlevelstart=20
+  "set foldmethod=syntax
 endif
 
 if has('mksession')
@@ -84,9 +86,9 @@ if has('mouse')
   endif
 endif
 
-if has('syntax')
-  set cursorline
-endif
+" if has('syntax')
+  " set cursorline
+" endif
 
 if has('windows')
   set showtabline=2
@@ -103,8 +105,8 @@ set tabstop=8
 set textwidth=72
 
 " Other
-set cursorline
-set cursorcolumn
+" set cursorline
+" set cursorcolumn
 " Key Mappings
 
 let mapleader = ','
@@ -175,43 +177,43 @@ colorscheme wtf
 
 " Stolen from https://github.com/Shougo/neocomplete.vim
 " Use neocomplete.
-let g:neocomplete#enable_at_startup = 0
+"let g:neocomplete#enable_at_startup = 0
 " Use smartcase.
-let g:neocomplete#enable_smart_case = 1
+"let g:neocomplete#enable_smart_case = 1
 " Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+"let g:neocomplete#sources#syntax#min_keyword_length = 3
+"let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 " Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
+"let g:neocomplete#sources#dictionary#dictionaries = {
+"    \ 'default' : '',
+"    \ 'vimshell' : $HOME.'/.vimshell_hist',
+"    \ 'scheme' : $HOME.'/.gosh_completions'
+"        \ }
 
 " Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
+"if !exists('g:neocomplete#keyword_patterns')
+"    let g:neocomplete#keyword_patterns = {}
+"endif
+"let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+"
 " Plugin key-mappings.
-inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
+"inoremap <expr><C-g>     neocomplete#undo_completion()
+"inoremap <expr><C-l>     neocomplete#complete_common_string()
 
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+"inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+"function! s:my_cr_function()
+"  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
   " For no inserting <CR> key.
   "return pumvisible() ? "\<C-y>" : "\<CR>"
-endfunction
+"endfunction
 " <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+"inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+"inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 " Close popup by <Space>.
 "inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 "inoremap <expr><Esc> (pumvisible() ? "\<C-y>" "\<Esc>" : "\<Esc>") <Esc>
@@ -221,5 +223,7 @@ inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
   "return (pumvisible() ? "\<C-e> \<Esc>" : "" ) . "\<Esc>"
 "endfunction
 
+let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
+let g:loaded_youcompleteme=1
 " Source local configuration:
 silent! source ~/.vimrc.local
