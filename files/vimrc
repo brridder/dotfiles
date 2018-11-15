@@ -144,6 +144,8 @@ inoremap <Esc>oB <Esc>ji
 inoremap <Esc>oC <Esc>li
 inoremap <Esc>oD <Esc>hi
 
+map Q <Nop>
+
 " fdoc is yaml
 autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
 " md is markdown
