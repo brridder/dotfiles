@@ -9,4 +9,28 @@ set history save on
 # Print Python stack dumps on error:
 set python print-stack full
 
+define hardfault
+  echo hardfault:
+  p/x *0xE000ED28
+  echo BFAR (if hardfault[15] == 1)
+  p/x *0xE000ED38
+  echo \n
+end
+
+define load_freertos_py
+  source ~/workspace/FreeRTOS-GDB/src/FreeRTOS.py
+end
+
+define irqs
+  echo NVIC Active Bits:\n
+  x/8wx 0xE000E300
+  echo System Control Block - Interrupt Control and State Register:\n
+  x/1wx 0xE000ED04
+end
+
+define is_in_isr
+  echo Is the core in an ISR?\n
+  p/x *0xE000ED04
+end
+
 # vim: ft=gdb
