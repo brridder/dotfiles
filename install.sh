@@ -12,7 +12,7 @@ for target in files/*; do
                 echo "Skipping $link_name; not a symbolic link"
         else
                 echo "Installing $link_name..."
-                ln -fs -T $PWD/$target $link_name
+                ln -fs $PWD/$target $link_name
         fi
 done
 
@@ -20,8 +20,8 @@ echo "Updating Command-T..."
 extdir=files/vim/bundle/command-t/ruby/command-t/
 (cd $extdir && ruby extconf.rb && make all)
 
-echo "Updating lesskey file..."
-lesskey
+#echo "Updating lesskey file..."
+#lesskey
 
 echo "Done."
 exit 0
