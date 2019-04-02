@@ -49,5 +49,10 @@
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
-	required = true
+    required = true
+
+[includeIf "gitdir:~/workspace/google/"]
+    path = ~/workspace/google/.gitconfig
 # vim: ft=gitconfig
+[http]
+	cookiefile = /Users/bridder/.gitcookies

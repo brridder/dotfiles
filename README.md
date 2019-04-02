@@ -11,6 +11,11 @@ issued and no action will be taken.
     % git clone git://github.com/brridder/dotfiles.git && cd dotfiles
     % sh install.sh
 
+Relies on updated versions of:
+* ctags
+* vim
+
+Need to run installation commands for `command-t` explicitly.
 <p align="center">
     <img src="https://raw.githubusercontent.com/sstallion/dotfiles/master/emacs.jpg"/>
 </p>

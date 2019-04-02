@@ -225,7 +225,13 @@ colorscheme wtf
   "return (pumvisible() ? "\<C-e> \<Esc>" : "" ) . "\<Esc>"
 "endfunction
 
+set statusline+=%{gutentags#statusline()}
+
 let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
 let g:loaded_youcompleteme=1
+let g:CommandTFileScanner="git"
+let g:CommandTMaxFiles=250000
+let g:gutentags_enabled=1
+let g:gutentags_generate_on_missing=1
 " Source local configuration:
 silent! source ~/.vimrc.local
