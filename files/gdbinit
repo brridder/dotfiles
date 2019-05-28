@@ -14,6 +14,8 @@ define hardfault
   p/x *0xE000ED28
   echo BFAR (if hardfault[15] == 1)
   p/x *0xE000ED38
+  echo MMAR (if hardfault[8] == 1)
+  p/x *0xE000ED34
   echo \n
 end
 

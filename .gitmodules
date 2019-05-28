@@ -79,3 +79,9 @@
 [submodule "files/vim/bundle/YouCompleteMe"]
 	path = files/vim/bundle/YouCompleteMe
 	url = git@github.com:Valloric/YouCompleteMe.git
+[submodule "files/vim/bundle/vim-clang-format"]
+	path = files/vim/bundle/vim-clang-format
+	url = https://github.com/rhysd/vim-clang-format.git
+[submodule "files/vim/bundle/bazel-compilation-database"]
+	path = files/vim/bundle/bazel-compilation-database
+	url = https://github.com/grailbio/bazel-compilation-database.git
