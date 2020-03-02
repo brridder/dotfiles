@@ -14,11 +14,34 @@ if has('syntax')
 endif
 
 " Default Options
-set nobackup
+"set nobackup
 set noerrorbells
 set nojoinspaces
-set noswapfile
+"set noswapfile
 set nowrap
+
+" Protect changes between writes. Default values of
+" updatecount (200 keystrokes) and updatetime
+" (4 seconds) are fine
+set swapfile
+set directory^=~/.vim/swap//
+
+" protect against crash-during-write
+set writebackup
+" but do not persist backup after successful write
+set nobackup
+" use rename-and-write-new method whenever safe
+set backupcopy=auto
+" patch required to honor double slash at end
+if has("patch-8.1.0251")
+  " consolidate the writebackups -- not a big
+  " deal either way, since they usually get deleted
+  set backupdir^=~/.vim/backup//
+end
+
+" persist the undo tree for each file
+set undofile
+set undodir^=~/.vim/undo//
 
 set autowrite
 set backspace=indent,eol,start
@@ -206,9 +229,24 @@ let g:clang_format#style_options = {
       \ "SortUsingDeclarations" : "true"}
 
 let g:clang_format#detect_style_file = 1
+let g:clang_format#enable_fallback_style = 0
 
 autocmd FileType cpp ClangFormatAutoEnable
 autocmd FileType c ClangFormatAutoEnable
 
+autocmd FileType python set softtabstop=2
+
+" Splits
+" window
+nmap <leader>swh :topleft  vnew<CR>
+nmap <leader>swl :botright vnew<CR>
+nmap <leader>swk :topleft  new<CR>
+nmap <leader>swj :botright new<CR>
+" buffer
+nmap <leader>sh  :leftabove  vnew<CR>
+nmap <leader>sl  :rightbelow vnew<CR>
+nmap <leader>sk  :leftabove  new<CR>
+nmap <leader>sj  :rightbelow new<CR>
+
 " Source local configuration:
-silent! source ~/.vimrc.local
+"silent! source ~/.vimrc.local

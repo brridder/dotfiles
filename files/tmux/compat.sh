@@ -15,12 +15,12 @@ Darwin)
 	# when installing reattach-to-user-namespace via brew(1);
 	# see: https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard,
 	#      http://superuser.com/a/413233.
-	tmux set-option -g default-command "reattach-to-user-namespace -l $SHELL"
+	#tmux set-option -g default-command "reattach-to-user-namespace -l $SHELL"
 
 	# Key Bindings
-	tmux bind-key -t vi-copy Enter copy-pipe "pbcopy"
-	tmux bind-key -t vi-copy y     copy-pipe "pbcopy"
-	tmux bind-key ] run-shell "pbpaste | tmux load-buffer - && tmux paste-buffer"
+	#tmux bind-key -t vi-copy Enter copy-pipe "pbcopy"
+	#tmux bind-key -t vi-copy y     copy-pipe "pbcopy"
+	#tmux bind-key ] run-shell "pbpaste | tmux load-buffer - && tmux paste-buffer"
 	;;
 Linux)
 	# Disable terminal clipboard when using gnome-terminal;

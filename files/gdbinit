@@ -9,6 +9,9 @@ set history save on
 # Print Python stack dumps on error:
 set python print-stack full
 
+# Print disassembly when stepping
+#set disassemble-next-line on
+
 define hardfault
   echo hardfault:
   p/x *0xE000ED28

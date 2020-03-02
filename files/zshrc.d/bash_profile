@@ -10,33 +10,11 @@ alias x='startx'
 alias ctags_2='ctags -R --exclude=android'
 export DEVELOPER_DIR="/Applications/Xcode.app/Contents/Developer"
 
-PATH=$PATH:/usr/local/gcc-4.8.0-qt-4.8.4-for-mingw32/win32-gcc/bin
-
-function setprompt {
-    local    BLUE="\[\e[94m\]"
-    local    LIGHT_GRAY="\[\e[90m\]"
-    local    DARK_GRAY="\[\e[37m\]"
-    local    RED="\[\e[91m\]"
-    local    BOLD_WHITE="\[\e[97m\]"
-    local    GREEN="\[\e[32m\]"
-    local    BRIGHT_GREEN="\[\e[92m\]"
-    local    NO_COLOR="\[\033[0m\]"
-    smiley="\`if [ \$? = 0 ]; then echo \[\e[0\;37m\]^_^; else echo \[\e[31m\]o_O\[\e[0m\]; fi\`"
-
-    timeBlock="$BLUE\t$GREEN]"
-    #timeBlock="$BLUE\t$RED]$BOLD_WHITE\$(__git_ps1 \" %s\")"
-    pathBlock=" $GREEN$BRIGHT_GREEN\w$GREEN"
-    userHostBlock="$GREEN[$BLUE$smiley $BRIGHT_GREEN\u "
-    promptChar=" $BOLD_WHITE\n\$$NO_COLOR"
-    ps2arrow="$BLUE-$BOLD_WHITE> $NO_COLOR"
-
-    export PS1="$userHostBlock$timeBlock$pathBlock$promptChar "
-    export PS2="$ps2arrow"
-    export PS3='#? '
-    export PS4='+ '
-}
-setprompt
-
+GREEN=82
+RED=160
+WHITE=231
+BLUE=39
+PROMPT="%F{82}[%(?.%F{231}^_^.%F{160}o_O) %F{82}%n %F{39}%*%F{82}] %F{82}%~ %F{231}"$'\n'"$ "
 
 alias ctags-generate='find . -type f -iname *.[chS] | xargs ctags -a'
 
@@ -44,7 +22,6 @@ PATH="/usr/local/opt/ruby/bin:$PATH"
 PATH="/Users/bridder/bin:$PATH"
 PATH="/Users/bridder/workspace/brew/bin:$PATH"
 PATH="/Users/bridder/workspace/brew/lib:$PATH"
-source /Users/bridder/.bazel/bin/bazel-complete.bash
 
 function find_replace {
   if [[ ${PWD:0:7} != "/Users/" ]]; then
@@ -64,7 +41,6 @@ function find_replace {
   read -n 1 -p "Is this okay? (y/n):" okay_to_continue
   echo ""
   if [[ $okay_to_continue == "y" ]]; then
-    #ag -Q "$1" -l | xargs -I {}  perl -pi -e "$REPLACEMENT_STRING" {}
     ag -Q "$1" -l | xargs sed -i '' "$REPLACEMENT_STRING"
   else
     echo "Exiting"
