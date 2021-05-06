@@ -201,24 +201,50 @@ endif
 " Color Scheme
 colorscheme wtf
 
-set statusline+=%{gutentags#statusline()}
 
-"let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
 "let g:loaded_youcompleteme=1
 
-let g:ycm_min_num_of_chars_for_completion = 99
+let g:ycm_auto_trigger = 1
+let g:ycm_min_num_of_chars_for_completion = 3
 let g:ycm_autoclose_preview_window_after_completion = 1
 "let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_confirm_extra_conf = 0
-let g:ycm_use_clangd = 0
+
+let g:git_repo=split(system('find . -name ".git" -maxdepth 1'))
+if len(g:git_repo) > 0
+ "system('python3 -c "import pathlib; import sys; [print(path) for path in pathlib.Path.cwd().rglob(\'compile_commands.json\')]"')
+  let g:compile_commands=split(system('find build/tmp/dbg -name "compile_commands.json"'))
+  if len(g:compile_commands) == 0
+    let g:compile_commands=split(system('find . -name "compile_commands.json"'))
+  endif
+  if len(g:compile_commands) > 0
+    let g:compile_commands_dir=join(split(g:compile_commands[0], '/')[0:-2], '/')
+    "let g:compile_commands_dir=join(['--compile-commands-dir=', g:compile_commands[0]], '')
+    let g:ycm_clangd_args = [
+      \ join(['--compile-commands-dir', g:compile_commands_dir], '=')
+      \ ]
+  endif
+endif
+
+let g:ycm_use_clangd = 1
+let g:ycm_filetype_blacklist = {
+  \ "command-t" : 1,
+  \}
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
+let g:ycm_key_list_stop_completion = ['<C-y>', '<Enter>']
 
 
 noremap <leader>jd :YcmCompleter GoTo<CR>
 
 let g:CommandTFileScanner="git"
 let g:CommandTMaxFiles=250000
+
 let g:gutentags_enabled=1
 let g:gutentags_generate_on_missing=1
+let g:gutentags_exclude = [ '*gcc-arm-none-eabi-*' ]
+set statusline+=%{gutentags#statusline()}
 
 let g:clang_format#style_options = {
       \ "BasedOnStyle" : "google",
@@ -238,15 +264,15 @@ autocmd FileType python set softtabstop=2
 
 " Splits
 " window
-nmap <leader>swh :topleft  vnew<CR>
-nmap <leader>swl :botright vnew<CR>
-nmap <leader>swk :topleft  new<CR>
-nmap <leader>swj :botright new<CR>
+"nmap <leader>swh :topleft  vnew<CR>
+"nmap <leader>swl :botright vnew<CR>
+"nmap <leader>swk :topleft  new<CR>
+"nmap <leader>swj :botright new<CR>
 " buffer
-nmap <leader>sh  :leftabove  vnew<CR>
-nmap <leader>sl  :rightbelow vnew<CR>
-nmap <leader>sk  :leftabove  new<CR>
-nmap <leader>sj  :rightbelow new<CR>
+"nmap <leader>sh  :leftabove  vnew<CR>
+"nmap <leader>sl  :rightbelow vnew<CR>
+"nmap <leader>sk  :leftabove  new<CR>
+"nmap <leader>sj  :rightbelow new<CR>
 
 " Source local configuration:
 "silent! source ~/.vimrc.local

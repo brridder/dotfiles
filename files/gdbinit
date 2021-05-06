@@ -13,12 +13,16 @@ set python print-stack full
 #set disassemble-next-line on
 
 define hardfault
-  echo hardfault:
-  p/x *0xE000ED28
-  echo BFAR (if hardfault[15] == 1)
-  p/x *0xE000ED38
-  echo MMAR (if hardfault[8] == 1)
+  echo CFSR:
+  p/x *(uint32_t *)0xE000ED28
+  echo UsageFault Status Register UFSR
+  p/x *(uint16_t *)0xE000ED2A
+  echo BF access reg: (if CFSR[15] == 1)
+  p/x *(uint32_t *)0xE000ED38
+  echo MMAR (if CFSR[8] == 1)
   p/x *0xE000ED34
+  echo HFSR:
+  p/x *0xE000ED2C
   echo \n
 end
 

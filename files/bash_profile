@@ -11,6 +11,7 @@ alias ctags_2='ctags -R --exclude=android'
 export DEVELOPER_DIR="/Applications/Xcode.app/Contents/Developer"
 
 PATH=$PATH:/usr/local/gcc-4.8.0-qt-4.8.4-for-mingw32/win32-gcc/bin
+PATH=/Users/bridder/workspace/brew/opt/ruby/bin/:$PATH
 
 function setprompt {
     local    BLUE="\[\e[94m\]"
@@ -46,6 +47,28 @@ PATH="/Users/bridder/workspace/brew/bin:$PATH"
 PATH="/Users/bridder/workspace/brew/lib:$PATH"
 source /Users/bridder/.bazel/bin/bazel-complete.bash
 
+function confirm() {
+    echo -n "Is this okay? (y/n): "
+    read REPLY
+    case $REPLY in
+    [Yy]) return true ;; # you can change what you do here for instance
+    [Nn]) return false ;;
+    # Here are a few optional options to choose between
+    # Any other answer:
+
+    # 1. Repeat the question
+    *) confirm ;;
+
+    # 2. ignore
+    # *) ;;
+
+    # 3. Exit terminal
+    # *) exit ;;
+
+    esac
+    # REPLY=''
+}
+
 function find_replace {
   if [[ ${PWD:0:7} != "/Users/" ]]; then
     echo "Wrong directory: $PWD"
@@ -61,9 +84,8 @@ function find_replace {
   REPLACEMENT_STRING="s/$1/$2/g"
   echo "Replacing $1 with $2 in the following files:"
   ag -Q "$1" -l
-  read -n 1 -p "Is this okay? (y/n):" okay_to_continue
   echo ""
-  if [[ $okay_to_continue == "y" ]]; then
+  if [[ confirm() ]]; then
     #ag -Q "$1" -l | xargs -I {}  perl -pi -e "$REPLACEMENT_STRING" {}
     ag -Q "$1" -l | xargs sed -i '' "$REPLACEMENT_STRING"
   else
@@ -71,6 +93,7 @@ function find_replace {
     return 0
   fi
 }
+
 export PATH="/Users/bridder/workspace/brew/opt/sphinx-doc/bin:$PATH"
 
 alias gn-format='find . -name BUILD.gn | xargs gn format && find . -name *.gni | xargs gn format && find . -name BUILDCONFIG.gn | xargs gn format'
@@ -78,3 +101,4 @@ alias gn-format='find . -name BUILD.gn | xargs gn format && find . -name *.gni |
 set -o vi
 
 alias ssh-cloudtop='ssh bridder.c.googlers.com'
+
