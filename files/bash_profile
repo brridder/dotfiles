@@ -45,7 +45,6 @@ PATH="/usr/local/opt/ruby/bin:$PATH"
 PATH="/Users/bridder/bin:$PATH"
 PATH="/Users/bridder/workspace/brew/bin:$PATH"
 PATH="/Users/bridder/workspace/brew/lib:$PATH"
-source /Users/bridder/.bazel/bin/bazel-complete.bash
 
 function confirm() {
     echo -n "Is this okay? (y/n): "
@@ -85,7 +84,7 @@ function find_replace {
   echo "Replacing $1 with $2 in the following files:"
   ag -Q "$1" -l
   echo ""
-  if [[ confirm() ]]; then
+  if [[ confirm ]]; then
     #ag -Q "$1" -l | xargs -I {}  perl -pi -e "$REPLACEMENT_STRING" {}
     ag -Q "$1" -l | xargs sed -i '' "$REPLACEMENT_STRING"
   else

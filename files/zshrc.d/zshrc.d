@@ -1,1 +1,0 @@
-/Users/bridder/workspace/dotfiles/files/zshrc.d

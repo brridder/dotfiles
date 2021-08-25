@@ -1,5 +1,9 @@
 {
-  "Right Option Key Sends" : 0,
+  "Ansi 3 Color" : {
+    "Green Component" : "0.627451",
+    "Red Component" : "0.7686275",
+    "Blue Component" : "0"
+  },
   "Tags" : [
     "Dynamic"
   ],
@@ -8,35 +12,35 @@
     "Red Component" : "0.4470588",
     "Blue Component" : "0.8117647"
   },
-  "Ansi 6 Color" : {
-    "Green Component" : "0.5960785",
-    "Red Component" : "0.02352941",
-    "Blue Component" : "0.6039215999999999"
-  },
+  "Use Non-ASCII Font" : false,
   "Draw Powerline Glyphs" : true,
   "Bold Color" : {
     "Green Component" : "1",
     "Red Component" : "1",
     "Blue Component" : "1"
   },
-  "Ansi 0 Color" : {
-    "Green Component" : "0",
-    "Red Component" : "0",
-    "Blue Component" : "0"
+  "Has Hotkey" : false,
+  "Ansi 8 Color" : {
+    "Green Component" : "0.3411765",
+    "Red Component" : "0.3333333",
+    "Blue Component" : "0.3254902"
   },
-  "Normal Font" : "InputMono-Medium 12",
-  "Ansi 3 Color" : {
-    "Green Component" : "0.627451",
-    "Red Component" : "0.7686275",
-    "Blue Component" : "0"
+  "Ansi 9 Color" : {
+    "Green Component" : "0.1607843",
+    "Red Component" : "0.9372549",
+    "Blue Component" : "0.1607843"
   },
   "Rows" : 25,
   "Default Bookmark" : "No",
-  "Horizontal Spacing" : 1,
-  "Ansi 5 Color" : {
-    "Green Component" : "0.3137255",
-    "Red Component" : "0.4588235",
-    "Blue Component" : "0.4823529"
+  "Ansi 7 Color" : {
+    "Green Component" : "0.8431373",
+    "Red Component" : "0.827451",
+    "Blue Component" : "0.8117647"
+  },
+  "Ansi 1 Color" : {
+    "Green Component" : "0",
+    "Red Component" : "0.8",
+    "Blue Component" : "0"
   },
   "Cursor Guide Color" : {
     "Red Component" : 0.65000000000000002,
@@ -78,17 +82,17 @@
   "Sync Title" : false,
   "Prompt Before Closing 2" : 2,
   "BM Growl" : false,
+  "Mouse Reporting" : true,
   "Command" : "",
   "Description" : "Default",
   "Dynamic Profile Filename" : "\/Users\/bridder\/Library\/Application Support\/iTerm2\/DynamicProfiles\/profiles.plist",
-  "Disable Window Resizing" : true,
   "Screen" : -1,
   "Selection Color" : {
     "Green Component" : "0.8353",
     "Red Component" : "0.7098",
     "Blue Component" : "1"
   },
-  "Mouse Reporting" : true,
+  "Disable Window Resizing" : true,
   "Columns" : 80,
   "Idle Code" : 0,
   "Ansi 13 Color" : {
@@ -315,49 +319,45 @@
     "Red Component" : "0",
     "Blue Component" : "0"
   },
-  "Minimum Contrast" : 0.15100870253164561,
+  "Minimum Contrast" : 0.071972091763005785,
   "Shortcut" : "",
   "Cursor Color" : {
     "Green Component" : "1",
     "Red Component" : "1",
     "Blue Component" : "1"
   },
-  "Transparency" : 0,
-  "Ansi 1 Color" : {
+  "Ansi 0 Color" : {
     "Green Component" : "0",
-    "Red Component" : "0.8",
+    "Red Component" : "0",
     "Blue Component" : "0"
   },
-  "Custom Directory" : "No",
   "Guid" : "",
   "Ansi 2 Color" : {
     "Green Component" : "0.6039215999999999",
     "Red Component" : "0.3058824",
     "Blue Component" : "0.02352941"
   },
+  "Custom Directory" : "No",
+  "Transparency" : 0,
+  "Ansi 5 Color" : {
+    "Green Component" : "0.3137255",
+    "Red Component" : "0.4588235",
+    "Blue Component" : "0.4823529"
+  },
+  "Right Option Key Sends" : 0,
+  "Ansi 6 Color" : {
+    "Green Component" : "0.5960785",
+    "Red Component" : "0.02352941",
+    "Blue Component" : "0.6039215999999999"
+  },
+  "Normal Font" : "InputMono-Medium 12",
+  "Horizontal Spacing" : 1,
   "Link Color" : {
     "Red Component" : 0.023,
     "Color Space" : "Calibrated",
     "Blue Component" : 0.67800000000000005,
     "Alpha Component" : 1,
     "Green Component" : 0.27000000000000002
-  },
-  "Use Non-ASCII Font" : false,
-  "Has Hotkey" : false,
-  "Ansi 8 Color" : {
-    "Green Component" : "0.3411765",
-    "Red Component" : "0.3333333",
-    "Blue Component" : "0.3254902"
-  },
-  "Ansi 9 Color" : {
-    "Green Component" : "0.1607843",
-    "Red Component" : "0.9372549",
-    "Blue Component" : "0.1607843"
-  },
-  "Ansi 7 Color" : {
-    "Green Component" : "0.8431373",
-    "Red Component" : "0.827451",
-    "Blue Component" : "0.8117647"
   },
   "Ansi 4 Color" : {
     "Green Component" : "0.3960784",

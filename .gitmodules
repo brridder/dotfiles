@@ -82,3 +82,6 @@
 [submodule "files/vim/bundle/vim-clang-format"]
 	path = files/vim/bundle/vim-clang-format
 	url = https://github.com/rhysd/vim-clang-format.git
+[submodule "nvim/pack/minpac"]
+	path = nvim/pack/minpac
+	url = https://github.com/k-takata/minpac.git

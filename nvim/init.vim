@@ -1,9 +1,34 @@
 " vimrc - vim configuration
 
-set nocompatible
+" Plugin Section
+call plugpac#begin()
+Pack 'k-takata/minpac', {'type': 'opt'}
+Pack 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Pack 'sstallion/vim-whitespace'
+Pack 'airblade/vim-gitgutter'
+Pack 'itchyny/lightline.vim'
+Pack 'rhysd/vim-clang-format'
+Pack 'ludovicchabant/vim-gutentags'
+Pack 'https://gn.googlesource.com/gn', { 'rtp': 'misc/vim' }
+Pack 'fidian/hexmode'
+Pack 'sstallion/vim-wtf'
+Pack 'sstallion/lightline-wtf'
+Pack 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-execute pathogen#infect()
-execute pathogen#helptags()
+Pack 'hrsh7th/nvim-compe'
+
+"Need for lightline
+Pack 'tpope/vim-fugitive'
+
+Pack 'neovim/nvim-lspconfig'
+"Pack 'nvim-lua/plenary.nvim'
+
+Pack 'gryf/wombat256grf'
+Pack 'jnurmine/Zenburn'
+Pack 'doums/darcula'
+call plugpac#end()
+
+set nocompatible
 
 if has('autocmd')
   filetype plugin indent on
@@ -109,6 +134,8 @@ if has('mouse')
   endif
 endif
 
+set noshowmode "Lightline handles this
+
 " if has('syntax')
   " set cursorline
 " endif
@@ -125,7 +152,7 @@ set expandtab
 set shiftwidth=2
 set softtabstop=2
 set tabstop=8
-set textwidth=72
+set textwidth=120
 
 " Other
 " set cursorline
@@ -158,6 +185,9 @@ noremap <silent> ]t :tabnext<CR>
 
 nnoremap <leader><space> :WhitespaceStrip<CR>
 nnoremap <leader>g :GitGutterToggle<CR>
+
+noremap <Leader>t :FZF<CR>
+noremap <Leader>b :Buffers<CR>
 
 " Remote terminals don't cope particularly well with arrow keys in
 " insert mode. The key mappings proposed in Solution 15 works around the
@@ -199,51 +229,14 @@ else
 endif
 
 " Color Scheme
-colorscheme wtf
-
-
-let g:loaded_youcompleteme=1
-let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
-
-let g:ycm_auto_trigger = 1
-let g:ycm_min_num_of_chars_for_completion = 3
-let g:ycm_autoclose_preview_window_after_completion = 1
-"let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_confirm_extra_conf = 0
-
-let g:git_repo=split(system('find . -name ".git" -maxdepth 1'))
-if len(g:git_repo) > 0
- "system('python3 -c "import pathlib; import sys; [print(path) for path in pathlib.Path.cwd().rglob(\'compile_commands.json\')]"')
-  let g:compile_commands=split(system('find build/tmp/dbg -name "compile_commands.json"'))
-  if len(g:compile_commands) == 0
-    let g:compile_commands=split(system('find . -name "compile_commands.json"'))
-  endif
-  if len(g:compile_commands) > 0
-    let g:compile_commands_dir=join(split(g:compile_commands[0], '/')[0:-2], '/')
-    "let g:compile_commands_dir=join(['--compile-commands-dir=', g:compile_commands[0]], '')
-    let g:ycm_clangd_args = [
-      \ join(['--compile-commands-dir', g:compile_commands_dir], '=')
-      \ ]
-  endif
-endif
-
-let g:ycm_use_clangd = 1
-let g:ycm_filetype_blacklist = {
-  \ "command-t" : 1,
-  \}
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
-let g:ycm_key_list_stop_completion = ['<C-y>', '<Enter>']
-
-noremap <leader>jd :YcmCompleter GoTo<CR>
-
-let g:CommandTFileScanner="git"
-let g:CommandTMaxFiles=250000
+"colorscheme wtf
+"colorscheme wombat256grf
+colorscheme wombat256grf
+highlight! link ExtraWhitespace ErrorMsg
 
 let g:gutentags_enabled=1
 let g:gutentags_generate_on_missing=1
 let g:gutentags_exclude = [ '*gcc-arm-none-eabi-*' ]
-set statusline+=%{gutentags#statusline()}
 
 let g:clang_format#style_options = {
       \ "BasedOnStyle" : "google",
@@ -261,18 +254,104 @@ autocmd FileType c ClangFormatAutoEnable
 
 autocmd FileType python set softtabstop=2
 autocmd FileType python set tabstop=2
+autocmd FileType python set shiftwidth=2
 
-" Splits
-" window
-"nmap <leader>swh :topleft  vnew<CR>
-"nmap <leader>swl :botright vnew<CR>
-"nmap <leader>swk :topleft  new<CR>
-"nmap <leader>swj :botright new<CR>
-" buffer
-"nmap <leader>sh  :leftabove  vnew<CR>
-"nmap <leader>sl  :rightbelow vnew<CR>
-"nmap <leader>sk  :leftabove  new<CR>
-"nmap <leader>sj  :rightbelow new<CR>
+" treesitter
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+    disable = {},
+  },
+  indent = {
+    enable = false,
+    disable = {},
+  },
+  ensure_installed = {
+    "bash",
+    "c",
+    "cmake",
+    "cpp",
+    "dockerfile",
+    "graphql",
+    "html",
+    "javascript",
+    "json",
+    "jsonc",
+    "lua",
+    "python",
+    "scss",
+    "typescript",
+    "yaml",
+    "zig",
+  },
+}
+EOF
 
-" Source local configuration:
-"silent! source ~/.vimrc.local
+" Language server providers
+lua << EOF
+vim.lsp.set_log_level("debug")
+local lspconfig = require'lspconfig'
+local scan = require'plenary.scandir'
+local Path = require'plenary.path'
+
+function get_compile_commands(fname)
+  local results =  scan.scan_dir(fname, { search_pattern = "compile_commands.json" })
+  if results[0] ~= nil then
+    return Path:new(results[0]):parent()
+  else
+    return Path:new(results[1]):parent()
+  end
+end
+
+--local compile_commands_dir = get_compile_commands(vim.loop.cwd())
+
+lspconfig.clangd.setup{ }
+
+lspconfig.pyright.setup{}
+
+EOF
+
+" Completion
+set completeopt=menuone,noselect
+lua <<EOF
+require'compe'.setup {
+  enabled = true;
+  autocomplete = true;
+  debug = false;
+  min_length = 1;
+  preselect = 'enable';
+  throttle_time = 80;
+  source_timeout = 200;
+  resolve_timeout = 800;
+  incomplete_delay = 400;
+  max_abbr_width = 100;
+  max_kind_width = 100;
+  max_menu_width = 100;
+  documentation = {
+    border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
+    winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
+    max_width = 120,
+    min_width = 60,
+    max_height = math.floor(vim.o.lines * 0.3),
+    min_height = 1,
+  };
+
+  source = {
+    path = true;
+    buffer = true;
+    calc = true;
+    nvim_lsp = true;
+    nvim_lua = true;
+    vsnip = true;
+    ultisnips = true;
+    luasnip = true;
+  };
+}
+EOF
+
+inoremap <silent><expr> <C-Space> compe#complete()
+inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+"inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+"inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
