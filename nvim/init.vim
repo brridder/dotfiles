@@ -26,6 +26,7 @@ Pack 'neovim/nvim-lspconfig'
 Pack 'gryf/wombat256grf'
 Pack 'jnurmine/Zenburn'
 Pack 'doums/darcula'
+Pack 'ziglang/zig.vim'
 call plugpac#end()
 
 set nocompatible
@@ -306,14 +307,28 @@ end
 
 --local compile_commands_dir = get_compile_commands(vim.loop.cwd())
 
-lspconfig.clangd.setup{ }
+lspconfig.clangd.setup{}
 
 lspconfig.pyright.setup{}
+
+--local on_attach = function(_, bufnr)
+  --vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  --require('completion').on_attach()
+--end
+
+local servers = {'zls'}
+for _, lsp in ipairs(servers) do
+    lspconfig[lsp].setup {
+  --      on_attach = on_attach,
+    }
+end
+--lspconfig.zig.setup{}
 
 EOF
 
 " Completion
-set completeopt=menuone,noselect
+set completeopt=menuone,noselect,noinsert
+
 lua <<EOF
 require'compe'.setup {
   enabled = true;
