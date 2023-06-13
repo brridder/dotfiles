@@ -20,6 +20,7 @@
 	# Look for exclude patterns under $HOME rather than the default.
 	# This avoids having to track $HOME/.config.
 	excludesFile = ~/.gitignore
+	editor = nvim
 
 [diff]
 	tool = vimdiff
@@ -41,6 +42,9 @@
 
 [includeIf "gitdir:~/workspace/google/**"]
         path = ~/workspace/google/.gitconfig
+
+[includeIf "gitdir:~/workspace/fi/**"]
+        path = ~/workspace/fi/.gitconfig
 
 [includeIf "gitdir:~/workspace/personal/**"]
         path = ~/workspace/personal/.gitconfig
@@ -64,3 +68,5 @@
 	cookiefile = /Users/bridder/.gitcookies
 [pull]
 	rebase = false
+[user]
+	name = Ben Ridder

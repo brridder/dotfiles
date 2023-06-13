@@ -42,4 +42,11 @@ define is_in_isr
   p/x *0xE000ED04
 end
 
+
+python
+import os,subprocess,sys
+paths = subprocess.check_output('python -c "import os,sys;print(os.linesep.join(sys.path).strip())"',shell=True).decode("utf-8").split()
+sys.path.extend(paths)
+end
+
 # vim: ft=gdb
