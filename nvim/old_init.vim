@@ -4,6 +4,7 @@
 call plugpac#begin()
 Pack 'k-takata/minpac', {'type': 'opt'}
 Pack 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Pack 'junegunn/fzf.vim',
 Pack 'sstallion/vim-whitespace'
 Pack 'airblade/vim-gitgutter'
 Pack 'itchyny/lightline.vim'
@@ -15,18 +16,27 @@ Pack 'sstallion/vim-wtf'
 Pack 'sstallion/lightline-wtf'
 Pack 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-Pack 'hrsh7th/nvim-compe'
+"Pack 'hrsh7th/nvim-comp'
+Pack 'ms-jpq/coq_nvim'
+Pack 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+Pack 'ms-jpq/coq.thirdparty', {'branch': '3p'}
 
 "Need for lightline
 Pack 'tpope/vim-fugitive'
 
 Pack 'neovim/nvim-lspconfig'
-"Pack 'nvim-lua/plenary.nvim'
+Pack 'nvim-lua/plenary.nvim'
 
 Pack 'gryf/wombat256grf'
 Pack 'jnurmine/Zenburn'
 Pack 'doums/darcula'
 Pack 'ziglang/zig.vim'
+
+Pack 'p00f/clangd_extensions.nvim'
+Pack 'sbdchd/neoformat'
+
+Pack 'ggandor/leap.nvim'
+
 call plugpac#end()
 
 set nocompatible
@@ -87,7 +97,7 @@ set timeoutlen=2000
 set ttimeoutlen=0
 set ttyfast
 
-set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc,*/build/,build/**
+set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc,*/build/,build/**,out/**
 set wildmenu                                                 " show a navigable menu for tab completion
 set wildmode=longest:list
 
@@ -166,7 +176,7 @@ noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
-nnoremap <leader>] :TagbarToggle<CR>
+" nnoremap <leader>] :TagbarToggle<CR>
 
 " noremap <C-J> <PageDown>
 " noremap <C-K> <PageUp>
@@ -187,7 +197,13 @@ noremap <silent> ]t :tabnext<CR>
 nnoremap <leader><space> :WhitespaceStrip<CR>
 nnoremap <leader>g :GitGutterToggle<CR>
 
-noremap <Leader>t :FZF<CR>
+command! MyGF call fzf#run(fzf#wrap({'source': 'git ls-files --recurse-submodules --exclude-standard --cached'}))
+
+command! -bang -nargs=? -complete=dir FdFiles call fzf#run(fzf#wrap({ 'source': 'fd -t f'}))
+
+"noremap <Leader>t :MyGF<CR>
+noremap <Leader>t :FdFiles<CR>
+noremap <Leader>f :Files<CR>
 noremap <Leader>b :Buffers<CR>
 
 " Remote terminals don't cope particularly well with arrow keys in
@@ -206,6 +222,9 @@ autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
 " md is markdown
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 autocmd BufRead,BufNewFile *.md set spell
+
+autocmd BufRead,BufNewFile *.gn set filetype=gn
+autocmd BufRead,BufNewFile *.gni set filetype=gn
 
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
@@ -232,12 +251,13 @@ endif
 " Color Scheme
 "colorscheme wtf
 "colorscheme wombat256grf
-colorscheme wombat256grf
+"colorscheme wombat256grf
 highlight! link ExtraWhitespace ErrorMsg
 
 let g:gutentags_enabled=1
 let g:gutentags_generate_on_missing=1
-let g:gutentags_exclude = [ '*gcc-arm-none-eabi-*' ]
+let g:gutentags_ctags_exclude = [ '*gcc-arm-none-eabi-*' ]
+let g:gutentags_cache_dir = "~/.config/tags/"
 
 let g:clang_format#style_options = {
       \ "BasedOnStyle" : "google",
@@ -250,12 +270,13 @@ let g:clang_format#style_options = {
 let g:clang_format#detect_style_file = 1
 let g:clang_format#enable_fallback_style = 0
 
-autocmd FileType cpp ClangFormatAutoEnable
-autocmd FileType c ClangFormatAutoEnable
+" autocmd FileType cpp ClangFormatAutoEnable
+" autocmd FileType c ClangFormatAutoEnable
 
 autocmd FileType python set softtabstop=2
 autocmd FileType python set tabstop=2
 autocmd FileType python set shiftwidth=2
+
 
 " treesitter
 lua <<EOF
@@ -291,82 +312,60 @@ EOF
 
 " Language server providers
 lua << EOF
-vim.lsp.set_log_level("debug")
-local lspconfig = require'lspconfig'
-local scan = require'plenary.scandir'
-local Path = require'plenary.path'
-
-function get_compile_commands(fname)
-  local results =  scan.scan_dir(fname, { search_pattern = "compile_commands.json" })
-  if results[0] ~= nil then
-    return Path:new(results[0]):parent()
-  else
-    return Path:new(results[1]):parent()
+  vim.lsp.set_log_level("debug")
+  local lspconfig = require'lspconfig'
+  local util = require'lspconfig.util'
+  lspconfig.pyright.setup{
+  root_dir = function(...)
+    return util.root_pattern('pyrightconfig.json')(...)
   end
-end
+  }
+  -- local scan = require'plenary.scandir'
+  -- local Path = require'plenary.path'
 
---local compile_commands_dir = get_compile_commands(vim.loop.cwd())
+  -- function get_compile_commands(fname)
+    -- local results =  scan.scan_dir(fname, { search_pattern = "compile_commands.json" })
+    -- if results[0] ~= nil then
+      -- return Path:new(results[0]):parent()
+    -- else
+      -- return Path:new(results[1]):parent()
+    -- end
+  -- end
 
-lspconfig.clangd.setup{}
+  -- local compile_commands_dir = get_compile_commands(vim.loop.cwd())
 
-lspconfig.pyright.setup{}
+  -- lspconfig.clangd.setup{}
+  require("clangd_extensions").setup{}
 
---local on_attach = function(_, bufnr)
-  --vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  --require('completion').on_attach()
---end
 
-local servers = {'zls'}
-for _, lsp in ipairs(servers) do
-    lspconfig[lsp].setup {
-  --      on_attach = on_attach,
-    }
-end
---lspconfig.zig.setup{}
+  --local on_attach = function(_, bufnr)
+    --vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    --require('completion').on_attach()
+  --end
+
+  local servers = {'zls'}
+  for _, lsp in ipairs(servers) do
+      lspconfig[lsp].setup {
+    --      on_attach = on_attach,
+      }
+  end
+  --lspconfig.zig.setup{}
 
 EOF
 
 " Completion
 set completeopt=menuone,noselect,noinsert
 
+let g:coq_settings = {
+  \ 'auto_start' : 'shut-up',
+  \ 'display.icons.mode': 'none',
+  \ 'keymap.jump_to_mark' : 'none',
+  \ }
 lua <<EOF
-require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  resolve_timeout = 800;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = {
-    border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
-    winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
-    max_width = 120,
-    min_width = 60,
-    max_height = math.floor(vim.o.lines * 0.3),
-    min_height = 1,
-  };
+require('coq')
 
-  source = {
-    path = true;
-    buffer = true;
-    calc = true;
-    nvim_lsp = true;
-    nvim_lua = true;
-    vsnip = true;
-    ultisnips = true;
-    luasnip = true;
-  };
-}
 EOF
 
-inoremap <silent><expr> <C-Space> compe#complete()
-inoremap <silent><expr> <CR>      compe#confirm('<CR>')
-inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-"inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-"inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+lua require('leap').add_default_mappings()
+
+set runtimepath+=~/.config/nvim/pack/minpac/start/gn/misc/vim/

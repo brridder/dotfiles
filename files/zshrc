@@ -48,3 +48,6 @@ export PATH="/Users/bridder/workspace/brew/opt/ruby/bin:$PATH"
 
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 
+
+# Created by `pipx` on 2023-10-05 20:46:36
+export PATH="$PATH:/Users/ben/.local/bin"

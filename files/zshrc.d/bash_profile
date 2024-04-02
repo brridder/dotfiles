@@ -23,9 +23,9 @@ PATH="/Users/ben/bin:$PATH"
 PATH="/Users/ben/workspace/homebrew/bin:$PATH"
 PATH="/Users/ben/workspace/homebrew/lib:$PATH"
 PATH="/Users/ben/workspace/zls/zig-out/bin:$PATH"
-PATH="/Users/ben/workspace/homebrew/Cellar/ruby/3.1.2_1/bin:$PATH"
-PATH="/Users/ben/workspace/homebrew/Cellar/ruby/3.1.2_1/lib:$PATH"
-PATH="/Users/ben/workspace/homebrew/lib/ruby/gems/3.1.0/bin:$PATH"
+#PATH="/Users/ben/workspace/homebrew/Cellar/ruby/3.1.2_1/bin:$PATH"
+#PATH="/Users/ben/workspace/homebrew/Cellar/ruby/3.1.2_1/lib:$PATH"
+#PATH="/Users/ben/workspace/homebrew/lib/ruby/gems/3.1.0/bin:$PATH"
 
 function find_replace {
   if [[ ${PWD:0:7} != "/Users/" ]]; then
