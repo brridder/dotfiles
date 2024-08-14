@@ -1,4 +1,4 @@
-vim.g.mapleader = ','
+--vim.g.mapleader = ','
 
 function map(mode, shortcut, command)
   vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = true })
@@ -25,6 +25,8 @@ map("", "<Leader>s", ":set spell!<CR>")
 map("", "<leader>x", ":Hexmode <CR>")
 --map("", "<leader>c", ":ClangFormat <CR>")
 map("", "<leader>c", ":lua vim.lsp.buf.format()<CR>")
+
+map("", "<leader>h", ":ClangdSwitchSourceHeader<CR>")
 
 map("", "[b", ":bprevious<CR>")
 map("", "]b", ":bnext<CR>")

@@ -3,11 +3,6 @@ require('key_mapping')
 require('set')
 
 vim.opt.completeopt = {'menuone','noselect','noinsert'}
-vim.g.coq_settings = {
-  auto_start = 'shut-up',
-  display = { icons = { mode = 'none'} },
-  keymap = { jump_to_mark = 'none'},
-}
 
 require('lazy').setup('plugins',
 {ui = {
@@ -28,6 +23,11 @@ require('lazy').setup('plugins',
   },})
 require('autocmds')
 
+vim.g.coq_settings = {
+  auto_start = 'shut-up',
+  display = { icons = { mode = 'none'} },
+  keymap = { jump_to_mark = 'none'},
+}
 require('coq')
 
 vim.lsp.set_log_level("off")

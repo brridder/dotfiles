@@ -159,7 +159,15 @@ return {
             {'ms-jpq/coq.artifacts', branch = 'artifacts'},
             {'ms-jpq/coq.thirdparty', branch = '3p'}
         },
-        build = ":COQdeps"
+        build = ":COQdeps",
+        init = function()
+          vim.g.coq_settings = {
+              auto_start = 'shut-up',
+              display = { icons = { mode = 'none'} },
+              keymap = { jump_to_mark = 'none'},
+              clients = {lsp = {resolve_timeout = 0.1}},
+          }
+        end,
     }, {
         'jose-elias-alvarez/null-ls.nvim',
         init = function()

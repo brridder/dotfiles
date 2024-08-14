@@ -1,8 +1,8 @@
 #!/bin/sh -e
 # install.sh - install dotfiles to $HOME
 
-echo "Updating submodules..."
-git submodule update --init --recursive
+#echo "Updating submodules..."
+#git submodule update --init --recursive
 
 # Link each file to the home directory iff the file does not exist or is
 # already a symbolic link. This will probably annoy someone, eventually.
@@ -16,9 +16,9 @@ for target in files/*; do
         fi
 done
 
-echo "Updating Command-T..."
-extdir=files/vim/bundle/command-t/ruby/command-t/
-(cd $extdir && ruby extconf.rb && make all)
+#echo "Updating Command-T..."
+#extdir=files/vim/bundle/command-t/ruby/command-t/
+#(cd $extdir && ruby extconf.rb && make all)
 
 #echo "Updating lesskey file..."
 #lesskey

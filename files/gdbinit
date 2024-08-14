@@ -13,16 +13,20 @@ set python print-stack full
 #set disassemble-next-line on
 
 define hardfault
-  echo CFSR:
+  echo CFSR (configurable fault status register): 
   p/x *(uint32_t *)0xE000ED28
-  echo UsageFault Status Register UFSR
+  echo UFSR (UsageFault Status Register): 
   p/x *(uint16_t *)0xE000ED2A
   echo BF access reg: (if CFSR[15] == 1)
   p/x *(uint32_t *)0xE000ED38
   echo MMAR (if CFSR[8] == 1)
   p/x *0xE000ED34
-  echo HFSR:
+  echo HFSR (HardFault Status Register): 
   p/x *0xE000ED2C
+  echo SFSR (secure fault status register) 
+  p/x *0xE000EDE4
+  echo SFAR (secure fault address register) 
+  p/x *0xE000EDE8
   echo \n
 end
 
@@ -35,6 +39,8 @@ define irqs
   x/8wx 0xE000E300
   echo System Control Block - Interrupt Control and State Register:\n
   x/1wx 0xE000ED04
+  echo System Hander Control and State Register (SHCSR):\n
+  x/1wx 0xE000ED24
 end
 
 define is_in_isr

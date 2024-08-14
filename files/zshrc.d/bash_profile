@@ -8,7 +8,7 @@ alias la='ls -a'
 alias exit='clear;exit'
 alias x='startx'
 alias ctags_2='ctags -R --exclude=android'
-export DEVELOPER_DIR="/Applications/Xcode.app/Contents/Developer"
+#export DEVELOPER_DIR="/Applications/Xcode.app/Contents/Developer"
 
 GREEN=82
 RED=160
@@ -18,14 +18,21 @@ PROMPT="%F{82}[%(?.%F{231}^_^.%F{160}o_O) %F{82}%n %F{39}%*%F{82}] %F{82}%~ %F{2
 
 alias ctags-generate='find . -type f -iname *.[chS] | xargs ctags -a'
 
-PATH="/usr/local/opt/ruby/bin:$PATH"
-PATH="/Users/ben/bin:$PATH"
-PATH="/Users/ben/workspace/homebrew/bin:$PATH"
-PATH="/Users/ben/workspace/homebrew/lib:$PATH"
-PATH="/Users/ben/workspace/zls/zig-out/bin:$PATH"
+#PATH="/usr/local/opt/ruby/bin:$PATH"
+#PATH="/Users/ben/bin:$PATH"
+PATH="/opt/homebrew/bin:$PATH"
+PATH="/opt/homebrew/lib:$PATH"
+#PATH="/Users/ben/workspace/zls/zig-out/bin:$PATH"
 #PATH="/Users/ben/workspace/homebrew/Cellar/ruby/3.1.2_1/bin:$PATH"
 #PATH="/Users/ben/workspace/homebrew/Cellar/ruby/3.1.2_1/lib:$PATH"
 #PATH="/Users/ben/workspace/homebrew/lib/ruby/gems/3.1.0/bin:$PATH"
+PATH="/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/bin:$PATH"
+#PATH="/Users/ben.ridder/workspace/gcc-arm-none-eabi-10.3-2021.10/bin/:$PATH"
+#PATH="/Applications/STMicroelectronics/STM32Cube/STM32CubeProgrammer/STM32CubeProgrammer.app/Contents/MacOs/bin:$PATH"
+PATH="/Applications/STMicroelectronics/STM32Cube/STM32CubeProgrammer/STM32CubeProgrammer.app/Contents/MacOs/bin:$PATH"
+PATH="/Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.ide.mcu.externaltools.stlink-gdb-server.macos64_2.1.400.202404281720/tools/bin:$PATH"
+PATH="/Users/ben.ridder/.local/bin:$PATH"
+PATH="/Users/ben.ridder/workspace/bin:$PATH"
 
 function find_replace {
   if [[ ${PWD:0:7} != "/Users/" ]]; then
