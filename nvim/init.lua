@@ -30,4 +30,4 @@ vim.g.coq_settings = {
 }
 require('coq')
 
-vim.lsp.set_log_level("off")
+vim.lsp.set_log_level("error")
